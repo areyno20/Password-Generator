@@ -3,7 +3,7 @@ const flags = {
   uppercase: false,
   numbers: false,
   symbols: false,
-  length: 5
+  length: 5,
 }
 
 const selectors = {
@@ -20,34 +20,40 @@ var generateBtn = document.querySelector("#generate");
 var password=document.getElementById("#generate");
 
  function writePassword() {
-    var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var passwordLength = 14;
-    var password = "";
-    var passwordText = document.querySelector("#password");
-    for (var i = 0; i <= passwordLength; i++) {
-      var randomNumber = Math.floor(Math.random() * chars.length);
-      password += chars.substring(randomNumber, randomNumber +1);
-     }
+    var defaultCharacters = 'abcdefghijklmnopqrstuvwxyz'
+    var characters = {
+      uppercase: defaultCharacters.toUpperCase(),
+      numbers: '0123456789',
+      symbols: '~!@-#$'
+  }
+
+    var finalChars = [
+      defaultCharacters,
+      ...flags.uppercase ? characters.uppercase : [],
+      ...flags.numbers ? characters.numbers : [],
+      ...flags.symbols ? characters.symbols : []
+      ].join('')
+
+
+    //return Array.from({ length: flags.length }, () => Math.floor(Math.random() * finalChars.length))
+    //.map(number => finalChars[number])
+    //.join('')
+
+
+  var passwordLength = flags.length;
+  var password = "";
+  var passwordText = document.querySelector("#password");
+  for (var i = 0; i < passwordLength; i++) {
+    var randomNumber = Math.floor(Math.random() * finalChars.length);
+    password += finalChars.substring(randomNumber, randomNumber +1);
+  }
      
-     passwordText.value = password;
+    passwordText.value = password;
  }
 
 
 generateBtn.addEventListener('click', event => {
   switch (event.target.dataset.jsSelector) {
-        // Event listener for copy
-        case selectors.copy:
-            const dummy = document.createElement('textarea')
-
-            document.body.appendChild(dummy)
-
-            dummy.value = selectors.input.value
-            dummy.select()
-
-            document.execCommand('copy')
-            document.body.removeChild(dummy)
-        break;
-
         // Event listeners for checkboxes
         case selectors.checkbox:
             flags[event.target.control.id] = !event.target.control.checked
