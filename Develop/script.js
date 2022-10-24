@@ -68,6 +68,21 @@ generateBtn.addEventListener('click', event => {
     }
 })
 
+
+var slider = document.getElementById("sliderrange");
+var output = document.getElementById("value");
+output.innerHTML = slider.value; // Display the default slider value
+
+// Update the current slider value (each time you drag the slider handle)
+slider.oninput = function() {
+  output.innerHTML = this.value;
+}
+
+
+
+
+
+
 // Get references to the #generate element
 //var generateBtn = document.querySelector("#generate");
 
