@@ -24,9 +24,30 @@
             aria-label="Generated Password"
           ></textarea>
         </div>
-        <div class="card-footer">
-          <button id="generate" class="btn">Generate Password</button>
-        </div>
+        <div class="inputs">
+          <label for="uppercase" data-js-selector="checkbox">
+              <input type="checkbox" id="uppercase" />
+              Uppercase
+          </label>
+          <label for="numbers" data-js-selector="checkbox">
+              <input type="checkbox" id="numbers" />
+              Numbers
+          </label>
+          <label for="symbols" data-js-selector="checkbox">
+              <input type="checkbox" id="symbols" />
+              Symbols
+          </label>
+          <div class="input-group">
+              Password Length
+
+              <div class="slider-container">
+                  <input type="range" min="5" max="20" value="5" class="slider" data-js-selector="slider" />
+                  <span class="value">5</span>
+              </div>
+          </div>
+        <table class="card-footer">
+          <th></th><div id="generate" class="btn" onclick="writePassword()">Generate Password</div></th>
+        </table>
       </div>
     </div>
     <script src="script.js"></script>
