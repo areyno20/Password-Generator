@@ -51,10 +51,7 @@ function charactersChosen() {
   if (confirmspecial == true) {
    passwordChars += special;
   }
-  if (passwordNumber === null){
-    return;
-  }
-
+  
   return passwordChars;
 }
 
