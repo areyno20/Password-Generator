@@ -1,106 +1,91 @@
-// Assignment code here
-const flags = {
-  uppercase: false,
-  numbers: false,
-  symbols: false,
-  length: 5,
-}
+//Global Scope
+var password = "";
 
-const selectors = {
-  copy: 'copy',
-  checkbox: 'checkbox',
-  slider: 'slider',
-  button: 'button',
-  sliderValue: document.querySelector('.value'),
-  input: document.querySelector('input[type="text"]')
-}
 
-var generateBtn = document.querySelector("#generate");
+//Function for character length and prompt window to give characters.
+function passwordLength() {
+  //prompt for password length
+  var passwordNumber = Math.floor(Number(prompt("Please enter the number of characters for your desired password (Between 8 and 128)")));
 
-var password=document.getElementById("#generate");
-
- function writePassword() {
-    var defaultCharacters = 'abcdefghijklmnopqrstuvwxyz'
-    var characters = {
-      uppercase: defaultCharacters.toUpperCase(),
-      numbers: '0123456789',
-      symbols: '~!@-#$'
+  // Alert for invalid choice of number.
+  if (passwordNumber < 8){
+    alert("Not enough characters for password.")
+    return passwordLength();
+  }
+  if (passwordNumber > 128){
+    alert("Too many characters for password.")
+    return passwordLength();
   }
 
-    var finalChars = [
-      defaultCharacters,
-      ...flags.uppercase ? characters.uppercase : [],
-      ...flags.numbers ? characters.numbers : [],
-      ...flags.symbols ? characters.symbols : []
-      ].join('')
-
-
-    //return Array.from({ length: flags.length }, () => Math.floor(Math.random() * finalChars.length))
-    //.map(number => finalChars[number])
-    //.join('')
-
-
-  var passwordLength = flags.length;
-  var password = "";
-  var passwordText = document.querySelector("#password");
-  for (var i = 0; i < passwordLength; i++) {
-    var randomNumber = Math.floor(Math.random() * finalChars.length);
-    password += finalChars.substring(randomNumber, randomNumber +1);
-  }
-     
-    passwordText.value = password;
- }
-
-
-generateBtn.addEventListener('click', event => {
-  switch (event.target.dataset.jsSelector) {
-        // Event listeners for checkboxes
-        case selectors.checkbox:
-            flags[event.target.control.id] = !event.target.control.checked
-        break;
-
-        // Event listeners for slider
-        case selectors.slider:
-            const value = event.target.valueAsNumber
-
-            selectors.sliderValue.innerText = value
-            flags.length = value
-        break;
-
-        // Event listener for generate button
-        case selectors.button:
-            selectors.input.value = generatePassword()
-        break;
-    }
-})
-
-
-var slider = document.getElementById("sliderrange");
-var output = document.getElementById("value");
-output.innerHTML = slider.value; // Display the default slider value
-
-// Update the current slider value (each time you drag the slider handle)
-slider.oninput = function() {
-  output.innerHTML = this.value;
+  return passwordNumber;
 }
 
 
+//Function for determining the chosen characters for the password.
+function charactersChosen() {
+  var passwordChars = "";
+  
+  //Character set for chosen categories
+  var lower= "abcdefghijklmnopqrstuvwxyz";
+  var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var numbers = "0123456789";
+  var special = "~!#$%^&*()";
+
+  //Prompt and confirmation of chosen character set
+  var confirmlowercase = confirm("Will your password include lower case characters?");
+  var confirmuppercase = confirm("Will your password include UPPER CASE characters?");
+  var confirmnumbers = confirm("Will your password include Numb3r characters?");
+  var confirmspecial = confirm("Will your password include $peci@l characters?");
 
 
+  //If chosen category is true passwordChars will contain the character set
+  if (confirmlowercase == true) {
+   passwordChars += lower;
+  }
+  if (confirmuppercase == true) {
+   passwordChars += upper;
+  }
+  if (confirmnumbers == true) {
+   passwordChars += numbers;
+  }
+  if (confirmspecial == true) {
+   passwordChars += special;
+  }
+  if (passwordNumber === null){
+    return;
+  }
 
+  return passwordChars;
+}
+
+
+//Function for generating final password.
+function passwordGenerate() {
+  password = "";
+
+  var length = passwordLength();
+  var passwordChars = charactersChosen();
+
+  var passwordCharsLength = passwordChars.length;
+
+  for (var i = 0; i < length; i++) {
+    password += passwordChars.charAt(Math.floor(Math.random() * passwordCharsLength));
+  }
+  
+  return password;
+};
 
 // Get references to the #generate element
-//var generateBtn = document.querySelector("#generate");
+var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-//function writePassword() {
-  //var password = generatePassword();
-  //var passwordText = document.querySelector("#password");
+function writePassword() {
+  var password = passwordGenerate();
+  var passwordText = document.querySelector("#password");
 
-  //passwordText.value = password;
+  passwordText.value = password;
 
-//}
+}
 
 // Add event listener to generate button
-//generateBtn.addEventListener("click", writePassword)
-
+generateBtn.addEventListener("click", writePassword);
