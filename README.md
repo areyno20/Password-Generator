@@ -2,7 +2,7 @@
 
 ## Description
 
-This week three challenege is intended to showcase the skills learnt throughout the third week of bootcamp. It contains a web page with a password generator. This password generator is to showcase the skills and knowledge learnt throughout week 3.
+This week three challenge is intended to showcase the skills learnt throughout the third week of bootcamp. It contains a web page with a password generator. This password generator is to showcase the skills and knowledge learnt throughout week 3.
 
 ## Installation
 
